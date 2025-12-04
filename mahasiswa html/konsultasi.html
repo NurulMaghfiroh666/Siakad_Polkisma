@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>Konsultasi Mahasiswa - SIAKAD</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h3>POLKISMA</h3>
+    <a href="dashboard-mahasiswa.html">Beranda</a>
+    <a class="active" href="konsultasi.html">Konsultasi</a>
+    <a href="index.html">Keluar</a>
+  </div>
+
+  <div class="content">
+    <h2>Konsultasi Mahasiswa</h2>
+
+    <div class="card">
+      <p>Total Pesan Masuk: <b>8</b> — Belum Dibalas: <b>0</b></p>
+
+      <table class="table">
+        <thead>
+          <tr><th>No</th><th>Tanggal</th><th>Dosen</th><th>Topik</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>2025-12-12</td><td>Yuni Astuti</td><td>Revisi Proposal</td><td>Belum Dibalas</td></tr>
+          <tr><td>2</td><td>2025-06-10</td><td>Budi Haryanto</td><td>Validasi KRS</td><td>Sedang Proses</td></tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:12px;">
+        <h4>Buat Pesan Baru</h4>
+        <form onsubmit="sendMessage(event)">
+          <label>Dosen Tujuan</label>
+          <select class="input-field" required>
+            <option>Dr. Syauqi</option>
+            <option>Yuni Astuti</option>
+            <option>Maya Lestari</option>
+          </select>
+
+          <label>Topik</label>
+          <input class="input-field" required>
+
+          <label>Isi Pesan</label>
+          <textarea class="input-field" rows="4" required></textarea>
+
+          <div style="margin-top:10px;">
+            <button class="btn-primary" type="submit">Kirim Pesan</button>
+            <button class="btn-light" type="button" onclick="resetForm()">Batal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script src="assets/js/sidebar.js"></script>
+<script>
+  function sendMessage(e){
+    e.preventDefault();
+    alert('Pesan dikirim (dummy).');
+    e.target.reset();
+  }
+  function resetForm(){
+    document.querySelector('form').reset();
+  }
+</script>
+</body>
+</html>
+

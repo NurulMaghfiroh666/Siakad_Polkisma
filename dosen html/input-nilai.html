@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Input Nilai - SIAKAD</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="sidebar">
+      <h3>POLKISMA</h3>
+      <a href="dashboard.html">Beranda</a>
+      <a href="jadwal.html">Jadwal Mengajar</a>
+      <a href="mahasiswa.html">Mahasiswa</a>
+      <a class="active" href="input-nilai.html">Input Nilai</a>
+      <a href="matakuliah.html">Mata Kuliah</a>
+      <a href="akademik.html">Akademik</a>
+      <a href="#" onclick="logout()">Keluar</a>
+  </div>
+
+  <div class="content">
+    <h2>Input Nilai</h2>
+
+    <div class="card">
+      <div style="display:flex; gap:12px; align-items:center; justify-content:space-between;">
+        <div style="flex-basis:60%;">
+          <select id="pilih-kelas" class="input-field" style="max-width:300px;">
+            <option>Pilih Kelas</option>
+            <option>Informatika A - S1</option>
+          </select>
+
+          <select id="pilih-matkul" class="input-field" style="max-width:300px;">
+            <option>Pilih Mata Kuliah</option>
+            <option>Pemrograman Web</option>
+            <option>Matematika Diskrit</option>
+          </select>
+        </div>
+
+        <div style="text-align:right;">
+          <button class="btn-primary" onclick="exportNilai()">Unduh CSV</button>
+        </div>
+      </div>
+
+      <table class="table" id="data-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>NIM</th>
+            <th>Tugas</th>
+            <th>UTS</th>
+            <th>UAS</th>
+            <th>Nilai Akhir</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Arya Anugrah Saputra</td>
+            <td>24102027</td>
+            <td contenteditable>85</td>
+            <td contenteditable>80</td>
+            <td contenteditable>82</td>
+            <td>—</td>
+            <td>
+              <button class="btn-primary" onclick="saveRow(this)">Simpan</button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>Dhenatan Gigi</td>
+            <td>22208976</td>
+            <td contenteditable>78</td>
+            <td contenteditable>75</td>
+            <td contenteditable>80</td>
+            <td>—</td>
+            <td>
+              <button class="btn-primary" onclick="saveRow(this)">Simpan</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="margin-top:10px; color:#666; font-size:13px;">*Edit nilai langsung pada tabel lalu klik "Simpan". (Dummy — belum terhubung database.)</p>
+    </div>
+  </div>
+
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/table.js"></script>
+
+  <script>
+    function saveRow(btn){
+      const tr = btn.closest('tr');
+      const tugas = parseFloat(tr.cells[3].textContent || 0);
+      const uts = parseFloat(tr.cells[4].textContent || 0);
+      const uas = parseFloat(tr.cells[5].textContent || 0);
+
+      // Perhitungan sederhana bobot: tugas 30%, UTS 30%, UAS 40%
+      const akhir = Math.round((tugas*0.3) + (uts*0.3) + (uas*0.4));
+      tr.cells[6].textContent = akhir;
+      alert('Nilai tersimpan (sementara, dummy). Nilai Akhir = ' + akhir);
+    }
+
+    function exportNilai(){
+      alert('Fungsi ekspor CSV (dummy). Nanti akan generate file CSV dari data dan mengunduhnya.');
+    }
+  </script>
+</body>
+</html>

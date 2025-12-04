@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>Evaluasi Diri - SIAKAD</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h3>POLKISMA</h3>
+    <a href="dashboard-mahasiswa.html">Beranda</a>
+    <a href="evaluasi-diri.html" class="active">Evaluasi Diri</a>
+    <a href="evaluasi-dosen.html">Evaluasi Dosen</a>
+    <a href="index.html">Keluar</a>
+  </div>
+
+  <div class="content">
+    <h2>Evaluasi Diri</h2>
+
+    <div class="card">
+      <p>Isi evaluasi diri untuk aspek akademik, kehadiran, etika, dsb. (Dummy form)</p>
+
+      <form onsubmit="submitSelfEval(event)">
+        <label>Kehadiran perkuliahan</label>
+        <select class="input-field" required>
+          <option value="">Pilih (1-5)</option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+
+        <label>Ketepatan waktu pengumpulan tugas</label>
+        <select class="input-field" required>
+          <option value="">Pilih (1-5)</option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+
+        <div style="margin-top:10px;">
+          <button class="btn-primary" type="submit">Kirim Evaluasi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<script src="assets/js/sidebar.js"></script>
+<script>
+  function submitSelfEval(e){
+    e.preventDefault();
+    alert('Evaluasi diri dikirim (dummy). Terima kasih!');
+  }
+</script>
+</body>
+</html>
