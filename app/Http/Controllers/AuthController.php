@@ -24,23 +24,23 @@ class AuthController extends Controller
         $user = null;
 
         if ($request->role === 'dosen') {
-            $dosen = \App\Models\Dosen::where('nip', $request->login_id)->first();
+            $dosen = \App\Models\Dosen::where('NIP', $request->login_id)->first();
             if ($dosen) {
                 $user = $dosen->user;
             }
         } elseif ($request->role === 'mahasiswa') {
-            $mahasiswa = \App\Models\Mahasiswa::where('nim', $request->login_id)->first();
+            $mahasiswa = \App\Models\Mahasiswa::where('NIM', $request->login_id)->first();
             if ($mahasiswa) {
                 $user = $mahasiswa->user;
             }
         }
 
-        if ($user && Auth::attempt(['email' => $user->email, 'password' => $request->password])) {
+        if ($user && Auth::attempt(['Username' => $user->Username, 'password' => $request->password])) {
             $request->session()->regenerate();
 
-            if ($user->role === 'dosen') {
+            if ($user->Role === 'dosen') {
                 return redirect()->intended('dosen/dashboard');
-            } elseif ($user->role === 'mahasiswa') {
+            } elseif ($user->Role === 'mahasiswa') {
                 return redirect()->intended('mahasiswa/dashboard');
             }
 

@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('krs_details', function (Blueprint $table) {
+        Schema::create('krs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('krs_id')->constrained('krs');
-            $table->foreignId('jadwal_id')->constrained();
+            $table->integer('IdMahasiswa');
+            $table->string('semester');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('krs_details');
+        Schema::dropIfExists('krs');
     }
 };

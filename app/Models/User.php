@@ -17,30 +17,37 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
+    protected $primaryKey = 'Id';
+    public $timestamps = false;
+
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role',
+        'Id',
+        'Username',
+        'Password',
+        'Role',
+        'IdAdmin',
+        'IdDosen',
+        'IdMahasiswa'
     ];
+
+    public function getAuthPassword()
+    {
+        return $this->Password;
+    }
 
     public function dosen()
     {
-        return $this->hasOne(Dosen::class);
+        return $this->belongsTo(Dosen::class, 'IdDosen', 'IdDosen');
     }
 
     public function mahasiswa()
     {
-        return $this->hasOne(Mahasiswa::class);
+        return $this->belongsTo(Mahasiswa::class, 'IdMahasiswa', 'IdMahasiswa');
     }
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
-        'password',
+        'Password',
         'remember_token',
     ];
 

@@ -7,11 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mahasiswa extends Model
 {
-    protected $guarded = ['id'];
+    protected $table = 'mahasiswa';
+    protected $primaryKey = 'IdMahasiswa';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'IdMahasiswa',
+        'NIM',
+        'Nama',
+        'Email',
+        'NoTelpon',
+        'TahunMasuk',
+        'IdJurusan'
+    ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class, 'IdMahasiswa', 'IdMahasiswa');
     }
 
     public function krs()

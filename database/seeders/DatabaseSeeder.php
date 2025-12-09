@@ -15,37 +15,107 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Admin/Dosen
-        $dosenUser = \App\Models\User::create([
-            'name' => 'Budi Santoso',
-            'email' => 'dosen@polkisma.ac.id',
-            'password' => bcrypt('password'),
-            'role' => 'dosen',
+        $dosen = \App\Models\Dosen::create([
+            'Nama' => 'Dr Haris S.Kom M.Kom',
+            'NIP' => '198501012010011001',
+            'Email' => 'dosen@polkisma.ac.id',
+            'NoTelpon' => '081234567890',
+        ]);
+
+        \App\Models\User::create([
+            'Username' => 'dosen',
+            'Password' => bcrypt('password'),
+            'Role' => 'dosen',
+            'IdDosen' => $dosen->IdDosen,
         ]);
         
-        \App\Models\Dosen::create([
-            'user_id' => $dosenUser->id,
-            'nip' => '198501012010011001',
-        ]);
-
         // Mahasiswa
-        $mhsUser = \App\Models\User::create([
-            'name' => 'Siti Aminah',
-            'email' => 'mahasiswa@polkisma.ac.id',
-            'password' => bcrypt('password'),
-            'role' => 'mahasiswa',
+        $mahasiswa = \App\Models\Mahasiswa::create([
+            'Nama' => 'Muhammad Iqbal',
+            'NIM' => '202301001',
+            'Email' => 'mahasiswa@polkisma.ac.id',
+            'NoTelpon' => '089876543210',
+            'TahunMasuk' => '2023',
+            'IdJurusan' => 1, // Assumption: Jurusan ID 1 exists
         ]);
 
-        \App\Models\Mahasiswa::create([
-            'user_id' => $mhsUser->id,
-            'nim' => '202301001',
-            'jurusan' => 'Teknik Informatika',
+        \App\Models\User::create([
+            'Username' => 'mahasiswa',
+            'Password' => bcrypt('password'),
+            'Role' => 'mahasiswa',
+            'IdMahasiswa' => $mahasiswa->IdMahasiswa,
         ]);
         
         // Matakuliah Dummy
-        \App\Models\Matakuliah::create([
-            'kode' => 'TI101',
-            'nama' => 'Algoritma dan Pemrograman',
-            'sks' => 3,
+        $mk1 = \App\Models\Matakuliah::create([
+            'KodeMK' => 'TI101',
+            'NamaMK' => 'Algoritma dan Pemrograman',
+            'SKS' => 3,
+            'IdJurusan' => 1,
+        ]);
+        
+        $mk2 = \App\Models\Matakuliah::create([
+            'KodeMK' => 'TI102',
+            'NamaMK' => 'Basis Data',
+            'SKS' => 3,
+            'IdJurusan' => 1,
+        ]);
+        
+        $mk3 = \App\Models\Matakuliah::create([
+            'KodeMK' => 'TI103',
+            'NamaMK' => 'Pemrograman Web',
+            'SKS' => 3,
+            'IdJurusan' => 1,
+        ]);
+        
+        $mk4 = \App\Models\Matakuliah::create([
+            'KodeMK' => 'TI104',
+            'NamaMK' => 'Matematika Diskrit',
+            'SKS' => 3,
+            'IdJurusan' => 1,
+        ]);
+        
+        // Jadwal for Dosen (matching current day for testing)
+        $hariIni = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'][date('w')];
+        
+        \App\Models\Jadwal::create([
+            'IdJadwal' => 1,
+            'IdDosen' => $dosen->IdDosen,
+            'KodeMK' => $mk1->KodeMK,
+            'Hari' => $hariIni,
+            'Jam' => '07.00-09.00',
+            'Kelas' => 'Informatika A - S1',
+            'Ruang' => 'Ruang 7',
+        ]);
+        
+        \App\Models\Jadwal::create([
+            'IdJadwal' => 2,
+            'IdDosen' => $dosen->IdDosen,
+            'KodeMK' => $mk2->KodeMK,
+            'Hari' => $hariIni,
+            'Jam' => '13.00-15.00',
+            'Kelas' => 'Informatika B - S1',
+            'Ruang' => 'Ruang 7',
+        ]);
+        
+        \App\Models\Jadwal::create([
+            'IdJadwal' => 3,
+            'IdDosen' => $dosen->IdDosen,
+            'KodeMK' => $mk3->KodeMK,
+            'Hari' => 'Selasa',
+            'Jam' => '07.00-09.00',
+            'Kelas' => 'Informatika A - S3',
+            'Ruang' => 'Ruang 7',
+        ]);
+        
+        \App\Models\Jadwal::create([
+            'IdJadwal' => 4,
+            'IdDosen' => $dosen->IdDosen,
+            'KodeMK' => $mk4->KodeMK,
+            'Hari' => 'Rabu',
+            'Jam' => '07.00-09.00',
+            'Kelas' => 'Informatika A - S2',
+            'Ruang' => 'Ruang 7',
         ]);
     }
 }

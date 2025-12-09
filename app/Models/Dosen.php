@@ -7,11 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dosen extends Model
 {
-    protected $guarded = ['id'];
+    protected $table = 'dosen';
+    protected $primaryKey = 'IdDosen';
+    public $timestamps = false;
+    
+    protected $fillable = [
+        'IdDosen',
+        'Nama',
+        'NIP',
+        'Email',
+        'NoTelpon'
+    ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class, 'IdDosen', 'IdDosen');
     }
 
     public function jadwals()

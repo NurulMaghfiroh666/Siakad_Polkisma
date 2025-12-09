@@ -7,7 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Matakuliah extends Model
 {
-    protected $guarded = ['id'];
+    protected $table = 'matakuliah';
+    protected $primaryKey = 'IdMataKuliah';
+    public $timestamps = false;
+    
+    protected $fillable = [
+        'IdMataKuliah',
+        'KodeMK',
+        'NamaMK',
+        'SKS',
+        'IdJurusan'
+    ];
 
     public function jadwals()
     {
