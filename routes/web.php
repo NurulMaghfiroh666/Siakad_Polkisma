@@ -34,6 +34,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/jadwal', [DosenDashboard::class, 'jadwal'])->name('jadwal');
         Route::get('/mata-kuliah', [DosenDashboard::class, 'matakuliah'])->name('matakuliah');
         Route::get('/biodata', [DosenDashboard::class, 'biodata'])->name('biodata');
+        
+        // Profile & Password Routes
+        Route::get('/profile/edit', [DosenDashboard::class, 'editProfile'])->name('profile.edit');
+        Route::put('/profile/update', [DosenDashboard::class, 'updateProfile'])->name('profile.update');
+        Route::get('/password/edit', [DosenDashboard::class, 'editPassword'])->name('password.edit');
+        Route::put('/password/update', [DosenDashboard::class, 'updatePassword'])->name('password.update');
     });
 
     // Mahasiswa Routes

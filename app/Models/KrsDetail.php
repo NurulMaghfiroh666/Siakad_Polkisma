@@ -16,7 +16,7 @@ class KrsDetail extends Model
 
     public function jadwal()
     {
-        return $this->belongsTo(Jadwal::class);
+        return $this->belongsTo(Jadwal::class, 'jadwal_id', 'IdJadwal');
     }
 
     public function nilai()

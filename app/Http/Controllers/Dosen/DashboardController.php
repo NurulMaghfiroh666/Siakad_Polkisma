@@ -133,4 +133,63 @@ class DashboardController extends Controller
 
         return view('dosen.biodata', compact('dosen'));
     }
+
+    public function editProfile()
+    {
+        $user = auth()->user();
+        $dosen = $user->dosen;
+
+        return view('dosen.edit-profile', compact('dosen'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'telepon' => 'required|string|max:15',
+            'alamat' => 'required|string|max:255',
+        ]);
+
+        $user = auth()->user();
+        $dosen = $user->dosen;
+
+        // Update Dosen table
+        if ($dosen) {
+            $dosen->Email = $request->email;
+            $dosen->Telepon = $request->telepon;
+            $dosen->Alamat = $request->alamat;
+            $dosen->save();
+        }
+
+        // Update User table email if needed
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect()->route('dosen.biodata')->with('success', 'Profil berhasil diperbarui.');
+    }
+
+    public function editPassword()
+    {
+        return view('dosen.edit-password');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = auth()->user();
+
+        if (!\Illuminate\Support\Facades\Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
+        }
+
+        $user->password = \Illuminate\Support\Facades\Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->route('dosen.biodata')->with('success', 'Password berhasil diperbarui.');
+    }
 }
+

@@ -28,6 +28,6 @@ class Mahasiswa extends Model
 
     public function krs()
     {
-        return $this->hasMany(Krs::class);
+        return $this->hasMany(Krs::class, 'IdMahasiswa', 'IdMahasiswa');
     }
 }
