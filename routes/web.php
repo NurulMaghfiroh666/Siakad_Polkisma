@@ -27,6 +27,22 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dosen/dashboard', [DosenDashboard::class, 'index'])->name('dosen.dashboard');
-    Route::get('/mahasiswa/dashboard', [MahasiswaDashboard::class, 'index'])->name('mahasiswa.dashboard');
+    // Dosen Routes
+    Route::prefix('dosen')->name('dosen.')->group(function () {
+        Route::get('/dashboard', [DosenDashboard::class, 'index'])->name('dashboard');
+        Route::get('/pesan', [DosenDashboard::class, 'pesan'])->name('pesan');
+        Route::get('/jadwal', [DosenDashboard::class, 'jadwal'])->name('jadwal');
+        Route::get('/mata-kuliah', [DosenDashboard::class, 'matakuliah'])->name('matakuliah');
+        Route::get('/biodata', [DosenDashboard::class, 'biodata'])->name('biodata');
+    });
+
+    // Mahasiswa Routes
+    Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+        Route::get('/dashboard', [MahasiswaDashboard::class, 'index'])->name('dashboard');
+        Route::get('/pesan', [MahasiswaDashboard::class, 'pesan'])->name('pesan');
+        Route::get('/jadwal', [MahasiswaDashboard::class, 'jadwal'])->name('jadwal');
+        Route::get('/mata-kuliah', [MahasiswaDashboard::class, 'matakuliah'])->name('matakuliah');
+        Route::get('/akademik', [MahasiswaDashboard::class, 'akademik'])->name('akademik');
+        Route::get('/biodata', [MahasiswaDashboard::class, 'biodata'])->name('biodata');
+    });
 });
