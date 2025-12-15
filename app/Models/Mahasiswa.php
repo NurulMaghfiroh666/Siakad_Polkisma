@@ -30,4 +30,33 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(Krs::class, 'IdMahasiswa', 'IdMahasiswa');
     }
+
+    /**
+     * Hitung IPK (Indeks Prestasi Kumulatif)
+     */
+    public function getIpkAttribute()
+    {
+        $allKrs = $this->krs;
+        
+        if ($allKrs->isEmpty()) {
+            return 0;
+        }
+
+        $totalBobot = 0;
+        $totalSks = 0;
+
+        foreach ($allKrs as $krs) {
+            foreach ($krs->details as $detail) {
+                if ($detail->nilai && $detail->jadwal && $detail->jadwal->matakuliah) {
+                    $sks = $detail->jadwal->matakuliah->SKS;
+                    $gradePoint = \App\Models\Nilai::hurufToGradePoint($detail->nilai->nilai_huruf);
+                    
+                    $totalBobot += $sks * $gradePoint;
+                    $totalSks += $sks;
+                }
+            }
+        }
+
+        return $totalSks > 0 ? round($totalBobot / $totalSks, 2) : 0;
+    }
 }

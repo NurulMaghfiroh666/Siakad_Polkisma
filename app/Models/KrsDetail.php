@@ -7,11 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class KrsDetail extends Model
 {
-    protected $guarded = ['id'];
+    use HasFactory;
+    
+    protected $table = 'krs_details';
+    protected $primaryKey = 'id';
+    
+    protected $fillable = [
+        'krs_id',
+        'jadwal_id'
+    ];
 
     public function krs()
     {
-        return $this->belongsTo(Krs::class);
+        return $this->belongsTo(Krs::class, 'krs_id', 'id');
     }
 
     public function jadwal()
@@ -21,6 +29,14 @@ class KrsDetail extends Model
 
     public function nilai()
     {
-        return $this->hasOne(Nilai::class);
+        return $this->hasOne(Nilai::class, 'krs_detail_id', 'id');
+    }
+
+    /**
+     * Get matakuliah through jadwal relationship
+     */
+    public function getMatakuliahAttribute()
+    {
+        return $this->jadwal ? $this->jadwal->matakuliah : null;
     }
 }

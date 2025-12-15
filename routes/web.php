@@ -15,8 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\MahasiswaController as AdminMahasiswaController;
+use App\Http\Controllers\Admin\DosenController as AdminDosenController;
+use App\Http\Controllers\Admin\KrsController as AdminKrsController;
+use App\Http\Controllers\Admin\JadwalController as AdminJadwalController;
 use App\Http\Controllers\Dosen\DashboardController as DosenDashboard;
+use App\Http\Controllers\Dosen\NilaiController as DosenNilaiController;
 use App\Http\Controllers\Mahasiswa\DashboardController as MahasiswaDashboard;
+use App\Http\Controllers\Mahasiswa\AkademikController as MahasiswaAkademikController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +34,33 @@ Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Admin Routes
+Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
+Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
+    
+    // Mahasiswa Management
+    Route::resource('mahasiswa', AdminMahasiswaController::class);
+    
+    // Dosen Management
+    Route::resource('dosen', AdminDosenController::class);
+    
+    // KRS Management
+    Route::get('/krs', [AdminKrsController::class, 'index'])->name('krs.index');
+    Route::get('/krs/create', [AdminKrsController::class, 'create'])->name('krs.create');
+    Route::post('/krs', [AdminKrsController::class, 'store'])->name('krs.store');
+    Route::get('/krs/{id}', [AdminKrsController::class, 'show'])->name('krs.show');
+    Route::post('/krs/{id}/add', [AdminKrsController::class, 'addMatakuliah'])->name('krs.add');
+    Route::delete('/krs/detail/{id}', [AdminKrsController::class, 'removeMatakuliah'])->name('krs.remove');
+    Route::delete('/krs/{id}', [AdminKrsController::class, 'destroy'])->name('krs.destroy');
+    
+    // Jadwal Management
+    Route::resource('jadwal', AdminJadwalController::class);
+});
+
 Route::middleware(['auth'])->group(function () {
     // Dosen Routes
     Route::prefix('dosen')->name('dosen.')->group(function () {
@@ -34,6 +69,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/jadwal', [DosenDashboard::class, 'jadwal'])->name('jadwal');
         Route::get('/mata-kuliah', [DosenDashboard::class, 'matakuliah'])->name('matakuliah');
         Route::get('/biodata', [DosenDashboard::class, 'biodata'])->name('biodata');
+        
+        // Input Nilai Routes
+        Route::get('/nilai', [DosenNilaiController::class, 'index'])->name('nilai.index');
+        Route::get('/nilai/{jadwal}', [DosenNilaiController::class, 'show'])->name('nilai.show');
+        Route::post('/nilai/store', [DosenNilaiController::class, 'store'])->name('nilai.store');
         
         // Profile & Password Routes
         Route::get('/profile/edit', [DosenDashboard::class, 'editProfile'])->name('profile.edit');
@@ -50,5 +90,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/mata-kuliah', [MahasiswaDashboard::class, 'matakuliah'])->name('matakuliah');
         Route::get('/akademik', [MahasiswaDashboard::class, 'akademik'])->name('akademik');
         Route::get('/biodata', [MahasiswaDashboard::class, 'biodata'])->name('biodata');
+        
+        // KRS & KHS Routes
+        Route::get('/krs', [MahasiswaAkademikController::class, 'krs'])->name('krs');
+        Route::get('/khs/{semester?}', [MahasiswaAkademikController::class, 'khs'])->name('khs');
     });
 });

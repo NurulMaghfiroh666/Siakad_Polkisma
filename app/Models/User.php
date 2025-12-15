@@ -46,6 +46,11 @@ class User extends Authenticatable
         return $this->belongsTo(Mahasiswa::class, 'IdMahasiswa', 'IdMahasiswa');
     }
 
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class, 'IdAdmin', 'IdAdmin');
+    }
+
     protected $hidden = [
         'Password',
         'remember_token',
