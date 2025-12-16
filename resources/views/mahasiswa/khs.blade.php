@@ -1,4 +1,4 @@
-@extends('layouts.mahasiswa')
+@extends('layouts.dashboard')
 
 @section('title', 'KHS - Kartu Hasil Studi')
 

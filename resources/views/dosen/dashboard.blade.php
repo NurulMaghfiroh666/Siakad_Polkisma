@@ -12,11 +12,11 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('dosen.pesan') }}" class="nav-link {{ request()->routeIs('dosen.pesan') ? 'active' : '' }}">
+    <a href="{{ route('dosen.nilai.index') }}" class="nav-link {{ request()->routeIs('dosen.nilai.*') ? 'active' : '' }}">
         <span class="nav-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
         </span> 
-        Pesan
+        Input Nilai
     </a>
 </li>
 <li class="nav-item">

@@ -61,8 +61,8 @@
                     </svg>
                 </div>
             </div>
-            <a href="#" class="inline-block mt-4 text-purple-600 hover:text-purple-800 font-medium text-sm">
-                Lihat  Semua →
+            <a href="{{ route('admin.matakuliah.index') }}" class="inline-block mt-4 text-purple-600 hover:text-purple-800 font-medium text-sm">
+                Lihat Semua →
             </a>
         </div>
     </div>

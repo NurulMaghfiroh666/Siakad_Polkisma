@@ -1,6 +1,25 @@
-@extends('layouts.dosen')
+@extends('layouts.dashboard')
 
 @section('title', 'Input Nilai - ' . ($jadwal->matakuliah->NamaMK ?? 'Mata Kuliah'))
+
+@section('sidebar-menu')
+<li class="nav-item">
+    <a href="{{ route('dosen.dashboard') }}" class="nav-link">
+        <span class="nav-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        </span> 
+        Beranda
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ route('dosen.nilai.index') }}" class="nav-link active">
+        <span class="nav-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </span> 
+        Input Nilai
+    </a>
+</li>
+@endsection
 
 @section('content')
 <div class="space-y-6">
@@ -17,12 +36,17 @@
     </div>
 
     @if(session('success'))
-    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
-        <div class="flex">
-            <svg class="h-5 w-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-            </svg>
-            <p class="text-green-700 font-medium">{{ session('success') }}</p>
+    <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 16px; padding: 20px 24px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="width: 48px; height: 48px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div style="flex: 1;">
+                <h3 style="color: white; font-size: 1.1rem; font-weight: 700; margin: 0 0 4px 0;">Berhasil!</h3>
+                <p style="color: rgba(255, 255, 255, 0.95); margin: 0; font-size: 0.95rem;">{{ session('success') }}</p>
+            </div>
         </div>
     </div>
     @endif

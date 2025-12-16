@@ -22,7 +22,7 @@
             </div>
             <div>
                 <p class="text-blue-100 text-sm">Total SKS</p>
-                <p class="text-lg font-semibold">{{ $krs->total_sks }} SKS</p>
+                <p class="text-lg font-semibold">{{ $krs->details->sum(function($d) { return $d->jadwal->matakuliah->SKS ?? 0; }) }} SKS</p>
             </div>
         </div>
     </div>
@@ -62,7 +62,7 @@
                     <td class="px-6 py-4">
                         <span class="text-sm text-gray-600">
                             {{ $detail->jadwal->Hari ?? '' }} • 
-                            {{ $detail->jadwal->JamMulai ?? '' }}-{{ $detail->jadwal->JamSelesai ?? '' }}
+                            {{ $detail->jadwal->Jam ?? '' }}
                             <br>
                             <span class="text-xs">Ruang: {{ $detail->jadwal->Ruang ?? '-' }}</span>
                         </span>

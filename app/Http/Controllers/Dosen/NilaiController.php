@@ -18,11 +18,17 @@ class NilaiController extends Controller
     public function index()
     {
         $user = Auth::user();
+        
+        if (!$user) {
+            return redirect()->route('login')
+                ->with('error', 'Silakan login terlebih dahulu!');
+        }
+        
         $dosen = $user->dosen;
         
         if (!$dosen) {
-            return redirect()->route('dosen.dashboard')
-                ->with('error', 'Data dosen tidak ditemukan!');
+            return redirect()->route('login')
+                ->with('error', 'Akses ditolak! Anda bukan dosen.');
         }
 
         // Get jadwal/mata kuliah yang diampu dosen ini
@@ -30,7 +36,7 @@ class NilaiController extends Controller
             ->with('matakuliah')
             ->get();
         
-        return view('dosen.input-nilai', compact('jadwals'));
+        return view('dosen.inputnilai', compact('jadwals'));
     }
 
     /**
@@ -57,13 +63,9 @@ class NilaiController extends Controller
     /**
      * Store or update nilai for students
      */
-    public function store(Request $request)
+    public function store(\App\Http\Requests\StoreNilaiRequest $request)
     {
-        $validated = $request->validate([
-            'nilai' => 'required|array',
-            'nilai.*.krs_detail_id' => 'required|exists:krs_details,id',
-            'nilai.*.nilai_angka' => 'nullable|numeric|min:0|max:100',
-        ]);
+        $validated = $request->validated();
 
         DB::beginTransaction();
         try {

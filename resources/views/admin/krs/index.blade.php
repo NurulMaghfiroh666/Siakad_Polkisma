@@ -54,7 +54,7 @@
                     <td class="px-6 py-4 text-sm text-gray-600">{{ $krs->semester }}</td>
                     <td class="px-6 py-4 text-center">
                         <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
-                            {{ $krs->total_sks }} SKS
+                            {{ $krs->details->sum(function($d) { return $d->jadwal->matakuliah->SKS ?? 0; }) }} SKS
                         </span>
                     </td>
                     <td class="px-6 py-4 text-center">

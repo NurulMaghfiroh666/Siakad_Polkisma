@@ -39,7 +39,7 @@ Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name(
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
 Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
     
     // Mahasiswa Management
@@ -47,6 +47,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     
     // Dosen Management
     Route::resource('dosen', AdminDosenController::class);
+    
+    // Mata Kuliah Management
+    Route::resource('matakuliah', \App\Http\Controllers\Admin\MatakuliahController::class, ['parameters' => ['matakuliah' => 'kodeMK']]);
     
     // KRS Management
     Route::get('/krs', [AdminKrsController::class, 'index'])->name('krs.index');
@@ -63,7 +66,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
 Route::middleware(['auth'])->group(function () {
     // Dosen Routes
-    Route::prefix('dosen')->name('dosen.')->group(function () {
+    Route::middleware(['role:dosen'])->prefix('dosen')->name('dosen.')->group(function () {
         Route::get('/dashboard', [DosenDashboard::class, 'index'])->name('dashboard');
         Route::get('/pesan', [DosenDashboard::class, 'pesan'])->name('pesan');
         Route::get('/jadwal', [DosenDashboard::class, 'jadwal'])->name('jadwal');
@@ -83,7 +86,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Mahasiswa Routes
-    Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+    Route::middleware(['role:mahasiswa'])->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         Route::get('/dashboard', [MahasiswaDashboard::class, 'index'])->name('dashboard');
         Route::get('/pesan', [MahasiswaDashboard::class, 'pesan'])->name('pesan');
         Route::get('/jadwal', [MahasiswaDashboard::class, 'jadwal'])->name('jadwal');

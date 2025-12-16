@@ -14,9 +14,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Admin/Dosen
+        // Dosen
         $dosen = \App\Models\Dosen::create([
-            'Nama' => 'Dr Haris S.Kom M.Kom',
+            'Nama' => 'Dr. Haris S.Kom M.Kom',
             'NIP' => '198501012010011001',
             'Email' => 'dosen@polkisma.ac.id',
             'NoTelpon' => '081234567890',
@@ -30,23 +30,55 @@ class DatabaseSeeder extends Seeder
         ]);
         
         // Mahasiswa
-        $mahasiswa = \App\Models\Mahasiswa::create([
+        $mahasiswa1 = \App\Models\Mahasiswa::create([
             'Nama' => 'Muhammad Iqbal',
             'NIM' => '202301001',
             'Email' => 'mahasiswa@polkisma.ac.id',
             'NoTelpon' => '089876543210',
             'TahunMasuk' => '2023',
-            'IdJurusan' => 1, // Assumption: Jurusan ID 1 exists
+            'IdJurusan' => 1,
         ]);
 
         \App\Models\User::create([
             'Username' => 'mahasiswa',
             'Password' => bcrypt('password'),
             'Role' => 'mahasiswa',
-            'IdMahasiswa' => $mahasiswa->IdMahasiswa,
+            'IdMahasiswa' => $mahasiswa1->IdMahasiswa,
         ]);
         
-        // Matakuliah Dummy
+        $mahasiswa2 = \App\Models\Mahasiswa::create([
+            'Nama' => 'Siti Nurhaliza',
+            'NIM' => '202301002',
+            'Email' => 'siti@polkisma.ac.id',
+            'NoTelpon' => '089876543211',
+            'TahunMasuk' => '2023',
+            'IdJurusan' => 1,
+        ]);
+        
+        \App\Models\User::create([
+            'Username' => 'siti',
+            'Password' => bcrypt('password'),
+            'Role' => 'mahasiswa',
+            'IdMahasiswa' => $mahasiswa2->IdMahasiswa,
+        ]);
+        
+        $mahasiswa3 = \App\Models\Mahasiswa::create([
+            'Nama' => 'Budi Santoso',
+            'NIM' => '202301003',
+            'Email' => 'budi@polkisma.ac.id',
+            'NoTelpon' => '089876543212',
+            'TahunMasuk' => '2023',
+            'IdJurusan' => 1,
+        ]);
+        
+        \App\Models\User::create([
+            'Username' => 'budi',
+            'Password' => bcrypt('password'),
+            'Role' => 'mahasiswa',
+            'IdMahasiswa' => $mahasiswa3->IdMahasiswa,
+        ]);
+        
+        // Matakuliah
         $mk1 = \App\Models\Matakuliah::create([
             'KodeMK' => 'TI101',
             'NamaMK' => 'Algoritma dan Pemrograman',
@@ -68,54 +100,85 @@ class DatabaseSeeder extends Seeder
             'IdJurusan' => 1,
         ]);
         
-        $mk4 = \App\Models\Matakuliah::create([
-            'KodeMK' => 'TI104',
-            'NamaMK' => 'Matematika Diskrit',
-            'SKS' => 3,
-            'IdJurusan' => 1,
-        ]);
-        
-        // Jadwal for Dosen (matching current day for testing)
-        $hariIni = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'][date('w')];
-        
-        \App\Models\Jadwal::create([
-            'IdJadwal' => 1,
+        // Jadwal
+        $jadwal1 = \App\Models\Jadwal::create([
             'IdDosen' => $dosen->IdDosen,
             'KodeMK' => $mk1->KodeMK,
-            'Hari' => $hariIni,
-            'Jam' => '07.00-09.00',
-            'Kelas' => 'Informatika A - S1',
-            'Ruang' => 'Ruang 7',
+            'Hari' => 'Senin',
+            'Jam' => '08:00-10:30',
+            'Kelas' => 'TI-1A',
+            'Ruang' => 'Lab Komputer 1',
         ]);
         
-        \App\Models\Jadwal::create([
-            'IdJadwal' => 2,
+        $jadwal2 = \App\Models\Jadwal::create([
             'IdDosen' => $dosen->IdDosen,
             'KodeMK' => $mk2->KodeMK,
-            'Hari' => $hariIni,
-            'Jam' => '13.00-15.00',
-            'Kelas' => 'Informatika B - S1',
-            'Ruang' => 'Ruang 7',
+            'Hari' => 'Rabu',
+            'Jam' => '10:00-12:30',
+            'Kelas' => 'TI-1A',
+            'Ruang' => 'Lab Komputer 2',
         ]);
         
-        \App\Models\Jadwal::create([
-            'IdJadwal' => 3,
+        $jadwal3 = \App\Models\Jadwal::create([
             'IdDosen' => $dosen->IdDosen,
             'KodeMK' => $mk3->KodeMK,
-            'Hari' => 'Selasa',
-            'Jam' => '07.00-09.00',
-            'Kelas' => 'Informatika A - S3',
-            'Ruang' => 'Ruang 7',
+            'Hari' => 'Jumat',
+            'Jam' => '13:00-15:30',
+            'Kelas' => 'TI-1A',
+            'Ruang' => 'Lab Komputer 1',
         ]);
         
-        \App\Models\Jadwal::create([
-            'IdJadwal' => 4,
-            'IdDosen' => $dosen->IdDosen,
-            'KodeMK' => $mk4->KodeMK,
-            'Hari' => 'Rabu',
-            'Jam' => '07.00-09.00',
-            'Kelas' => 'Informatika A - S2',
-            'Ruang' => 'Ruang 7',
+        // KRS untuk Mahasiswa 1
+        $krs1 = \App\Models\Krs::create([
+            'IdMahasiswa' => $mahasiswa1->IdMahasiswa,
+            'semester' => 1,
+        ]);
+        
+        \App\Models\KrsDetail::create([
+            'krs_id' => $krs1->id,
+            'jadwal_id' => $jadwal1->IdJadwal,
+        ]);
+        
+        \App\Models\KrsDetail::create([
+            'krs_id' => $krs1->id,
+            'jadwal_id' => $jadwal2->IdJadwal,
+        ]);
+        
+        \App\Models\KrsDetail::create([
+            'krs_id' => $krs1->id,
+            'jadwal_id' => $jadwal3->IdJadwal,
+        ]);
+        
+        // KRS untuk Mahasiswa 2
+        $krs2 = \App\Models\Krs::create([
+            'IdMahasiswa' => $mahasiswa2->IdMahasiswa,
+            'semester' => 1,
+        ]);
+        
+        \App\Models\KrsDetail::create([
+            'krs_id' => $krs2->id,
+            'jadwal_id' => $jadwal1->IdJadwal,
+        ]);
+        
+        \App\Models\KrsDetail::create([
+            'krs_id' => $krs2->id,
+            'jadwal_id' => $jadwal2->IdJadwal,
+        ]);
+        
+        // KRS untuk Mahasiswa 3
+        $krs3 = \App\Models\Krs::create([
+            'IdMahasiswa' => $mahasiswa3->IdMahasiswa,
+            'semester' => 1,
+        ]);
+        
+        \App\Models\KrsDetail::create([
+            'krs_id' => $krs3->id,
+            'jadwal_id' => $jadwal1->IdJadwal,
+        ]);
+        
+        \App\Models\KrsDetail::create([
+            'krs_id' => $krs3->id,
+            'jadwal_id' => $jadwal3->IdJadwal,
         ]);
     }
 }

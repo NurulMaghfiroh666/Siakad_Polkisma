@@ -76,7 +76,7 @@ class DashboardController extends Controller
         $jadwalHariIni = collect();
 
         if ($activeKrs) {
-            $jadwalHariIni = \App\Models\KrsDetail::where('IdKrs', $activeKrs->id)
+            $jadwalHariIni = \App\Models\KrsDetail::where('krs_id', $activeKrs->id)
                 ->with(['jadwal.matakuliah', 'jadwal.dosen'])
                 ->get()
                 ->map(function ($detail) {
@@ -114,7 +114,7 @@ class DashboardController extends Controller
         $jadwal = collect();
 
         if ($activeKrs) {
-            $jadwal = \App\Models\KrsDetail::where('IdKrs', $activeKrs->id)
+            $jadwal = \App\Models\KrsDetail::where('krs_id', $activeKrs->id)
                 ->with(['jadwal.matakuliah', 'jadwal.dosen'])
                 ->get()
                 ->map(function ($detail) {
@@ -145,7 +145,7 @@ class DashboardController extends Controller
         $matakuliah = collect();
 
         if ($activeKrs) {
-            $matakuliah = \App\Models\KrsDetail::where('IdKrs', $activeKrs->id)
+            $matakuliah = \App\Models\KrsDetail::where('krs_id', $activeKrs->id)
                 ->with(['jadwal.matakuliah'])
                 ->get()
                 ->map(function ($detail) {
@@ -162,50 +162,34 @@ class DashboardController extends Controller
         $mahasiswa = $this->getMahasiswa();
         if (!$mahasiswa) return redirect()->route('login');
 
-        // KRS Data (Active Semester)
+        // KRS Data (Active Semester) - Get jadwal items directly
         $activeKrs = $mahasiswa->krs()->orderBy('semester', 'desc')->first();
-        $krsHelper = []; // Using array/collection for view compatibility
+        $krs = collect(); // Empty collection by default
         
         if ($activeKrs) {
-            $details = \App\Models\KrsDetail::where('IdKrs', $activeKrs->id)
+            $krs = \App\Models\KrsDetail::where('krs_id', $activeKrs->id)
                 ->with(['jadwal.matakuliah', 'jadwal.dosen'])
-                ->get();
-            
-            $krsHelper['details'] = $details;
-            $krsHelper['totalSks'] = $details->sum(fn($d) => $d->jadwal->matakuliah->SKS ?? 0);
-            $krsHelper['semester'] = $activeKrs->semester;
+                ->get()
+                ->map(function($detail) {
+                    // Map to match view expectations
+                    return (object) [
+                        'KodeMK' => $detail->jadwal->matakuliah->KodeMK ?? '-',
+                        'matakuliah' => (object) [
+                            'Nama' => $detail->jadwal->matakuliah->NamaMK ?? '-',
+                            'SKS' => $detail->jadwal->matakuliah->SKS ?? 0,
+                        ],
+                        'Kelas' => $detail->jadwal->Kelas ?? '-',
+                        'dosen' => (object) [
+                            'Nama' => $detail->jadwal->dosen->Nama ?? '-',
+                        ],
+                    ];
+                });
         }
 
-        // KHS Data (Group by Semester)
-        $allKrs = $mahasiswa->krs()->with(['details.nilai', 'details.jadwal.matakuliah'])->orderBy('semester', 'desc')->get();
-        $khs = $allKrs->map(function ($krsItem) {
-            $semesterDetails = $krsItem->details;
-            $sksSemester = $semesterDetails->sum(fn($d) => $d->jadwal->matakuliah->SKS ?? 0);
-            
-            // Calculate IP Semester
-            $mutuSemester = 0;
-            $sksLulusSemester = 0;
-            foreach ($semesterDetails as $detail) {
-                if ($detail->nilai) {
-                    $sks = $detail->jadwal->matakuliah->SKS ?? 0;
-                    $nilai = $detail->nilai->nilai_angka ?? 0;
-                    if ($nilai > 0) {
-                        $mutuSemester += ($nilai * $sks);
-                        $sksLulusSemester += $sks;
-                    }
-                }
-            }
-            $ips = $sksLulusSemester > 0 ? number_format($mutuSemester / $sksLulusSemester, 2) : 0.00;
+        // KHS Data - Not yet implemented
+        $khs = collect();
 
-            return [
-                'semester' => $krsItem->semester,
-                'details' => $semesterDetails,
-                'ips' => $ips,
-                'total_sks' => $sksSemester
-            ];
-        });
-
-        return view('mahasiswa.akademik', compact('krsHelper', 'khs'));
+        return view('mahasiswa.akademik', compact('krs', 'khs'));
     }
 
     public function biodata()
