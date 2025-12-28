@@ -126,10 +126,10 @@
     
     <div class="user-pill">
         <div class="user-avatar">
-            {{ strtoupper(substr(auth()->user()->name ?? 'M', 0, 1)) }}
+            {{ strtoupper(substr(auth()->user()->Username ?? 'M', 0, 1)) }}
         </div>
         <div class="user-info">
-            <div class="user-name">{{ auth()->user()->name ?? 'Mahasiswa' }}</div>
+            <div class="user-name">{{ auth()->user()->Username ?? 'Mahasiswa' }}</div>
             <div class="user-role">Mahasiswa</div>
         </div>
     </div>
@@ -190,7 +190,7 @@
             @forelse($jadwalHariIni ?? [] as $jadwal)
             <tr>
                 <td>{{ $jadwal->Jam ?? '-' }}</td>
-                <td><strong>{{ $jadwal->matakuliah->Nama ?? '-' }}</strong></td>
+                <td><strong>{{ $jadwal->matakuliah->NamaMK ?? '-' }}</strong></td>
                 <td>{{ $jadwal->dosen->Nama ?? '-' }}</td>
                 <td>{{ $jadwal->Ruang ?? '-' }}</td>
             </tr>

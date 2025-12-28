@@ -161,10 +161,10 @@
     <!-- Sidebar -->
     <div class="profile-sidebar">
         <div class="profile-photo">
-            {{ strtoupper(substr($Mahasiswa->name ?? 'D', 0, 1)) }}
+            {{ strtoupper(substr($mahasiswa->Nama ?? 'D', 0, 1)) }}
         </div>
-        <div class="profile-name">{{ $Mahasiswa->name ?? 'Nama Mahasiswa' }}</div>
-        <div class="profile-NIM">NIM: {{ $Mahasiswa->NIM ?? '-' }}</div>
+        <div class="profile-name">{{ $mahasiswa->Nama ?? 'Nama Mahasiswa' }}</div>
+        <div class="profile-NIM">NIM: {{ $mahasiswa->NIM ?? '-' }}</div>
         
         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
             <button class="btn btn-secondary" style="width: 100%; margin-bottom: 10px;">
@@ -185,27 +185,27 @@
         <div class="info-grid">
             <div class="info-item">
                 <div class="info-label">Nama Lengkap</div>
-                <div class="info-value">{{ $Mahasiswa->name ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->Nama ?? '-' }}</div>
             </div>
             <div class="info-item">
                 <div class="info-label">NIM</div>
-                <div class="info-value">{{ $Mahasiswa->NIM ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->NIM ?? '-' }}</div>
             </div>
             <div class="info-item">
                 <div class="info-label">NIDN</div>
-                <div class="info-value">{{ $Mahasiswa->nidn ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->nidn ?? '-' }}</div>
             </div>
             <div class="info-item">
                 <div class="info-label">Tempat, Tanggal Lahir</div>
-                <div class="info-value">{{ $Mahasiswa->tempat_lahir ?? '-' }}, {{ $Mahasiswa->tanggal_lahir ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->tempat_lahir ?? '-' }}, {{ $mahasiswa->tanggal_lahir ?? '-' }}</div>
             </div>
             <div class="info-item">
                 <div class="info-label">Jenis Kelamin</div>
-                <div class="info-value">{{ $Mahasiswa->jenis_kelamin ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->jenis_kelamin ?? '-' }}</div>
             </div>
             <div class="info-item">
                 <div class="info-label">Agama</div>
-                <div class="info-value">{{ $Mahasiswa->agama ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->agama ?? '-' }}</div>
             </div>
         </div>
 
@@ -214,15 +214,15 @@
         <div class="info-grid">
             <div class="info-item">
                 <div class="info-label">Email</div>
-                <div class="info-value">{{ $Mahasiswa->email ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->email ?? '-' }}</div>
             </div>
             <div class="info-item">
                 <div class="info-label">No. Telepon</div>
-                <div class="info-value">{{ $Mahasiswa->telepon ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->telepon ?? '-' }}</div>
             </div>
             <div class="info-item" style="grid-column: 1 / -1;">
                 <div class="info-label">Alamat</div>
-                <div class="info-value">{{ $Mahasiswa->alamat ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->alamat ?? '-' }}</div>
             </div>
         </div>
 
@@ -231,19 +231,19 @@
         <div class="info-grid">
             <div class="info-item">
                 <div class="info-label">Pendidikan Terakhir</div>
-                <div class="info-value">{{ $Mahasiswa->pendidikan_terakhir ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->pendidikan_terakhir ?? '-' }}</div>
             </div>
             <div class="info-item">
                 <div class="info-label">Jabatan Fungsional</div>
-                <div class="info-value">{{ $Mahasiswa->jabatan ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->jabatan ?? '-' }}</div>
             </div>
             <div class="info-item">
                 <div class="info-label">Program Studi</div>
-                <div class="info-value">{{ $Mahasiswa->prodi ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->prodi ?? '-' }}</div>
             </div>
             <div class="info-item">
                 <div class="info-label">Status Kepegawaian</div>
-                <div class="info-value">{{ $Mahasiswa->status_kepegawaian ?? '-' }}</div>
+                <div class="info-value">{{ $mahasiswa->status_kepegawaian ?? '-' }}</div>
             </div>
         </div>
     </div>

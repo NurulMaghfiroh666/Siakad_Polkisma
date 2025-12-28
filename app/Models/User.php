@@ -31,10 +31,17 @@ class User extends Authenticatable
         'IdMahasiswa'
     ];
 
+
+    public function getAuthIdentifierName()
+    {
+        return 'Username';
+    }
+
     public function getAuthPassword()
     {
-        return $this->Password;
+        return $this->attributes['Password'];
     }
+
 
     public function dosen()
     {

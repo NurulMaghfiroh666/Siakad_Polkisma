@@ -21,4 +21,9 @@ class Jadwal extends Model
     {
         return $this->belongsTo(Dosen::class, 'IdDosen', 'IdDosen');
     }
+
+    public function krsDetails()
+    {
+        return $this->hasMany(KrsDetail::class, 'jadwal_id', 'IdJadwal');
+    }
 }

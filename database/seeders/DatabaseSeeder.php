@@ -14,6 +14,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Admin
+        $this->call(AdminSeeder::class);
+        
         // Dosen
         $dosen = \App\Models\Dosen::create([
             'Nama' => 'Dr. Haris S.Kom M.Kom',
@@ -40,7 +43,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\User::create([
-            'Username' => 'mahasiswa',
+            'Username' => $mahasiswa1->NIM,  
             'Password' => bcrypt('password'),
             'Role' => 'mahasiswa',
             'IdMahasiswa' => $mahasiswa1->IdMahasiswa,
@@ -56,7 +59,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
         \App\Models\User::create([
-            'Username' => 'siti',
+            'Username' => $mahasiswa2->NIM,  // Gunakan NIM sebagai Username
             'Password' => bcrypt('password'),
             'Role' => 'mahasiswa',
             'IdMahasiswa' => $mahasiswa2->IdMahasiswa,
@@ -72,7 +75,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
         \App\Models\User::create([
-            'Username' => 'budi',
+            'Username' => $mahasiswa3->NIM,  // Gunakan NIM sebagai Username
             'Password' => bcrypt('password'),
             'Role' => 'mahasiswa',
             'IdMahasiswa' => $mahasiswa3->IdMahasiswa,

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login - SIAKAD POLKISMA')
+@section('title', 'Masuk - SIAKAD POLKISMA')
 
 @section('content')
 <style>
@@ -195,32 +195,46 @@
     input[type="radio"] {
         display: none;
     }
-    input[id="role-dosen"]:checked ~ .slider {
-        transform: translateX(0%);
-    }
-    input[id="role-mahasiswa"]:checked ~ .slider {
-        transform: translateX(100%);
-    }
+    
     .toggle-container {
         display: flex;
-        background: #fff;
-        border: 2px solid #eef2f5;
-        border-radius: 30px;
+        background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+        border: none;
+        border-radius: 50px;
         overflow: hidden;
         margin-bottom: 25px;
+        padding: 6px;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.08);
+        position: relative;
     }
+    
     .toggle-label {
         flex: 1;
         text-align: center;
-        padding: 10px;
+        padding: 12px 20px;
         cursor: pointer;
-        font-weight: 600;
-        color: #95a5a6;
-        transition: 0.3s;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: #64748b;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        z-index: 2;
+        letter-spacing: 0.3px;
     }
+    
+    .toggle-label:hover:not(:has(input:checked)) {
+        color: #475569;
+        transform: scale(1.02);
+    }
+    
     .toggle-input:checked + .toggle-label {
-        background: #2c3e50;
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
         color: white;
+        box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3), 
+                    0 2px 4px rgba(0, 0, 0, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border-radius: 40px;
+        transform: translateY(-1px);
     }
 
     /* Responsive */
@@ -267,7 +281,7 @@
                 @csrf
                 
                 <div class="form-header">
-                    <div class="form-title">LOGIN SIAKAD</div>
+                    <div class="form-title">MASUK SIAKAD</div>
                     <!-- Role Toggle -->
                     <div class="toggle-container">
                         <input type="radio" id="dosen" name="role" value="dosen" class="toggle-input" checked onchange="updatePlaceholder()">

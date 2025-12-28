@@ -24,14 +24,30 @@ class AuthController extends Controller
         $user = null;
 
         if ($request->role === 'dosen') {
+            // Try to find dosen by NIP first
             $dosen = \App\Models\Dosen::where('NIP', $request->login_id)->first();
             if ($dosen) {
                 $user = $dosen->user;
             }
+            
+            // If not found by NIP, try by Username
+            if (!$user) {
+                $user = \App\Models\User::where('Username', $request->login_id)
+                    ->where('Role', 'dosen')
+                    ->first();
+            }
         } elseif ($request->role === 'mahasiswa') {
+            // Try to find mahasiswa by NIM first
             $mahasiswa = \App\Models\Mahasiswa::where('NIM', $request->login_id)->first();
             if ($mahasiswa) {
                 $user = $mahasiswa->user;
+            }
+            
+            // If not found by NIM, try by Username
+            if (!$user) {
+                $user = \App\Models\User::where('Username', $request->login_id)
+                    ->where('Role', 'mahasiswa')
+                    ->first();
             }
         }
 
@@ -48,7 +64,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'login_id' => 'NIP/NIM atau Kata Sandi salah.',
+            'login_id' => 'NIP/NIM/Username atau Kata Sandi salah.',
         ])->onlyInput('login_id', 'role');
     }
 

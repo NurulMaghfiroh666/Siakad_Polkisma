@@ -178,7 +178,7 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $item->KodeMK ?? '-' }}</td>
-                    <td><strong>{{ $item->matakuliah->Nama ?? '-' }}</strong></td>
+                    <td><strong>{{ $item->matakuliah->NamaMK ?? '-' }}</strong></td>
                     <td>{{ $item->matakuliah->SKS ?? '-' }}</td>
                     <td>{{ $item->Kelas ?? '-' }}</td>
                     <td>{{ $item->dosen->Nama ?? '-' }}</td>
@@ -233,7 +233,7 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $item->KodeMK ?? '-' }}</td>
-                    <td><strong>{{ $item->matakuliah->Nama ?? '-' }}</strong></td>
+                    <td><strong>{{ $item->matakuliah->NamaMK ?? '-' }}</strong></td>
                     <td>{{ $item->matakuliah->SKS ?? '-' }}</td>
                     <td>{{ $item->NilaiAngka ?? '-' }}</td>
                     <td><span class="badge badge-info">{{ $item->NilaiHuruf ?? '-' }}</span></td>

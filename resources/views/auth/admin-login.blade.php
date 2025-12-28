@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - SIAKAD Polkisma</title>
+    <title>Masuk Admin - SIAKAD Polkisma</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -15,7 +15,7 @@
     <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-gray-200">
         <div class="text-center mb-8">
             <h1 class="text-3xl font-bold text-blue-900">SIAKAD Panel</h1>
-            <p class="text-gray-500 mt-2">Administrator Login</p>
+            <p class="text-gray-500 mt-2">Masuk Administrator</p>
         </div>
 
         @if ($errors->any())
